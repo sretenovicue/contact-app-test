@@ -40,7 +40,7 @@ Cypress.Commands.add('Login', () => {
 
 
 Cypress.Commands.add('loginShould', () => {
-    cy.get('#error')
+    cy.get('[id="error"]')
     .should('have.text', 'Incorrect username or password')
     cy.contains('p', 'Not yet a user? Click here to sign up!')
 })
@@ -49,6 +49,23 @@ Cypress.Commands.add('loginShould', () => {
 Cypress.Commands.add('loginInputPassword', () => {
 cy.get('#password')
   .type('Bsr@enovic25')
-cy.get('#submit')
+  cy.get('#submit')
   .click()
 })
+
+
+Cypress.Commands.add('loginWelcomeMessage', () => {
+cy.get('[class="welcome-message"]')
+      .eq(0)
+      .should('contain', 'Welcome! This application is for testing purposes only. The database will be purged as needed to keep costs down.')
+      .and('have.css', 'color', 'rgb(66, 135, 245)')
+    cy.get('[class="welcome-message"]').eq(1)
+      .should('contain', 'The API documentation can be found')
+    })
+
+    Cypress.Commands.add('loginInputPasswordInvalid', () => {
+      cy.get('#password')
+        .type('Bsr@enovic')
+        cy.get('#submit')
+        .click()
+      })

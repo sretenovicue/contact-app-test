@@ -1,5 +1,5 @@
 Cypress.Commands.add('signUpCheck', () => {
-    cy.visit('https://thinking-tester-contact-list.herokuapp.com/')
+    cy.visit('/')
     cy.get('#signup')
     .should('have.text', 'Sign up')
         .and('not.be.disabled')

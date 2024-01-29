@@ -5,13 +5,10 @@ import { loginPageElements } from '../support/Pom/loginPageElements'
 
 describe('Login', () => {
   it('Login without entering credentials', () => {
-    cy.visit('https://thinking-tester-contact-list.herokuapp.com/')
-    cy.get('[class="welcome-message"]')
-      .eq(0)
-      .should('contain', 'Welcome! This application is for testing purposes only. The database will be purged as needed to keep costs down.')
-      .and('have.css', 'color', 'rgb(66, 135, 245)')
-    cy.get('[class="welcome-message"]').eq(1)
-      .should('contain', 'The API documentation can be found')
+    cy.intercept('POST', '/users/login')
+    .as('loginErrorMessage')
+    cy.visit('/')
+    cy.loginWelcomeMessage()
     cy.get(loginPageElements.email)
       .clear()
     cy.get(loginPageElements.password)
@@ -19,10 +16,12 @@ describe('Login', () => {
     cy.get(loginPageElements.submit)
       .click()
     cy.get(loginPageElements.error)
-
+    cy.wait('@loginErrorMessage')
   })
 
-  it('Login without username', () => {
+  it('Login with username only', () => {
+    cy.intercept('POST', '/users/login')
+    .as('loginErrorMessage1')
     cy.visit('/')
     cy.get(loginPageElements.email)
       .type('sretenovicue@gmail.com')
@@ -31,33 +30,40 @@ describe('Login', () => {
     cy.get(loginPageElements.submit)
       .click()
     cy.loginShould()
-
+    cy.wait('@loginErrorMessage1')
   })
 
-  it('Login without password', () => {
+  it('Login with password only', () => {
+    cy.intercept('POST', '/users/login')
+    .as('loginErrorMessage2')
     cy.visit('/')
     cy.get(loginPageElements.email)
-      .clear
+    .clear
     cy.loginInputPassword()
     cy.loginShould()
-
+    cy.wait('@loginErrorMessage2')
   })
 
   it('Login with wrong password', () => {
+   cy.intercept('POST', '/users/login')
+    .as('loginErrorMessage2')
     cy.visit('/')
     cy.get(loginPageElements.email)
-      .clear
-    cy.loginInputPassword()
+    .type('sretenovicue@gmail.com')
+    cy.loginInputPasswordInvalid()
     cy.loginShould()
+    cy.wait('@loginErrorMessage2')
   })
 
   it('Login with wrong username', () => {
+    cy.intercept('POST', '/users/login')
+    .as('loginErrorMessage2')
     cy.visit('/')
     cy.get(loginPageElements.email)
-      .clear
+    .type('sretenov@gmail.com')
     cy.loginInputPassword()
+    cy.wait('@loginErrorMessage2')
   })
-
 
 
 
