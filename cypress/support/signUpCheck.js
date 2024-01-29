@@ -1,0 +1,10 @@
+Cypress.Commands.add('signUpCheck', () => {
+    cy.visit('https://thinking-tester-contact-list.herokuapp.com/')
+    cy.get('#signup')
+    .should('have.text', 'Sign up')
+        .and('not.be.disabled')
+        .click()
+    cy.get('h1')
+    .should('have.text', 'Add User')
+    cy.contains('p', 'Sign up to begin adding your contacts!') 
+})
