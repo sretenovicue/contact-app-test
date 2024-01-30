@@ -35,9 +35,11 @@ describe('API Testing', () => {
                 console.log(body)
                 const token = body.token
                 cy.request({
+
                     url: '/contacts',
                     headers: { 'Authorization': 'Bearer ' + token },
                     method: 'GET'
+
                 })
                     .then(response => {
                         expect(response.status)
@@ -65,10 +67,12 @@ describe('API Testing', () => {
                 }
 
                 cy.request({
+
                     url: '/users',
                     headers: { 'Authorization': 'Bearer ' + token },
                     method: 'POST',
                     body: bodyObjectPost
+
                 }).then(response => {
                     expect(response.status)
                         .to.equal(201)
@@ -80,8 +84,7 @@ describe('API Testing', () => {
             })
         })
 
-    
-    it('Delete Contact', () => {
+    it('Get User Profile', () => {
         cy.request('POST', '/users/login', userCredentials)
             .its('body')
             .then(body => {
@@ -89,27 +92,53 @@ describe('API Testing', () => {
                 const token = body.token
                 cy.request({
 
-                    url: 'https://thinking-tester-contact-list.herokuapp.com/contacts',
+                    url: 'users/me',
                     headers: { 'Authorization': 'Bearer ' + token },
                     method: 'GET'
                 })
-                    .then(response => {
-                        const recordIdsToDelete = response.body.map(record => record.id);
-                        recordIdsToDelete.forEach(id => {
-                            cy.request({
-                                url: `https://thinking-tester-contact-list.herokuapp.com/contacts/${id}`,
-                                headers: { 'Authorization': 'Bearer ' + token },
-                                method: 'DELETE'
-                            })
-                                .then(deleteResponse => {
-                                expect(deleteResponse.status).to.equal(200);
-
-
-
+                .then( response => {
+                    expect( response.status )
+                        .to.equal(200)
+                    expect(response.body)
+                        .to.be.an('object')
+                        expect(response.body)
+                        .to.haveOwnProperty('email')
+                     
                                 })
                         })
 
                     })
-            })
-        })
+        // Kod je zakomentarisan jer updateom postojeceg korisnika 'gubim' token za autorizaciju. 
+        //             it('Update User', () => {
+        //                 cy.request('POST', '/users/login', userCredentials)
+        //                     .its('body')
+        //                     .then(body => {
+        //                         console.log(body)
+        //                         const token = body.token
+        //                         const bodyObjectUpdate = {
+
+        //                                 "firstName": "Mitar",
+        //                                 "lastName": "Username.unique",
+        //                                 "email": `testuser${Date.now()}@example.com`,
+        //                                 "password": "myNewPassword"
+
+        //                                                     }
+        //                         cy.request({
+
+        //                             url: 'users/me',
+        //                             headers: { 'Authorization': 'Bearer ' + token },
+        //                             method: 'PATCH',
+        //                             body: bodyObjectUpdate
+                                    
+        //                         })
+        //     //                     .then( response => {
+        //     //                         expect( response.status )
+        //     //                             .to.equal(200)
+        //     //                         expect(response.body)
+        //     //                             .to.be.an('object')
+        //     //                             expect(response.body)
+        //     //                             .to.haveOwnProperty('email')
+        //     // })
+        // })
     })
+    
