@@ -109,26 +109,26 @@ describe('API Testing', () => {
 
                     })
         // Kod je zakomentarisan jer updateom postojeceg korisnika 'gubim' token za autorizaciju. 
-        //             it('Update User', () => {
-        //                 cy.request('POST', '/users/login', userCredentials)
-        //                     .its('body')
-        //                     .then(body => {
-        //                         console.log(body)
-        //                         const token = body.token
-        //                         const bodyObjectUpdate = {
+                    // it('Update User', () => {
+                    //     cy.request('POST', '/users/login', userCredentials)
+                    //         .its('body')
+                    //         .then(body => {
+                    //             console.log(body)
+                    //             const token = body.token
+                    //             const bodyObjectUpdate = {
 
-        //                                 "firstName": "Mitar",
-        //                                 "lastName": "Username.unique",
-        //                                 "email": `testuser${Date.now()}@example.com`,
-        //                                 "password": "myNewPassword"
+                    //                     "firstName": "Mitar",
+                    //                     "lastName": "Username.unique",
+                    //                     "email": `testuser${Date.now()}@example.com`,
+                    //                     "password": "myNewPassword"
 
-        //                                                     }
-        //                         cy.request({
+                    //                                         }
+                    //             cy.request({
 
-        //                             url: 'users/me',
-        //                             headers: { 'Authorization': 'Bearer ' + token },
-        //                             method: 'PATCH',
-        //                             body: bodyObjectUpdate
+                    //                 url: 'users/me',
+                    //                 headers: { 'Authorization': 'Bearer ' + token },
+                    //                 method: 'PATCH',
+                    //                 body: bodyObjectUpdate
                                     
         //                         })
         //     //                     .then( response => {
@@ -141,4 +141,3 @@ describe('API Testing', () => {
         //     // })
         // })
     })
-    
