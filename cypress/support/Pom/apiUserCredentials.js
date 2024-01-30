@@ -1,6 +1,6 @@
 const userCredentials = 
 {
-    "email": "sretenovicue@gmail.com",
+    "email": "testiranje.api@gmail.com",
     "password": "Bsr@enovic25"
 }
 
