@@ -26,7 +26,7 @@ describe('API Testing', () => {
             })
     })
 
-    it.only('Get Contact List', () => {
+    it('Get Contact List', () => {
         cy.intercept('POST', '/contacts', { fixture: 'apiFixture.json'})
         .as('contacts')
         cy.request('POST', '/users/login', userCredentials)
