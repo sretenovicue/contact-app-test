@@ -21,7 +21,8 @@ describe('Sign Up', () => {
 
 
     it('Type only firstname', () => {
-        cy.intercept('POST', 'https://thinking-tester-contact-list.herokuapp.com/users').as('postUser')
+        cy.intercept('POST', '/users')
+            .as('postUser')
         cy.get(signUpFormElements.firstName)
             .type(credentials.firstName)
         cy.get('#submit')
@@ -32,18 +33,22 @@ describe('Sign Up', () => {
 
 
     it('Type first and lastname ', () => {
+        cy.intercept('POST', '/users')
+            .as('postUserErrorMessage')
         cy.get(signUpFormElements.firstName)
-            .type('Aleksa')
+            .type(credentials.firstName)
         cy.get(signUpFormElements.lastName)
             .type(credentials.lastName)
         cy.get('#submit')
             .click()
         cy.ErrorMessages(errorMessagesSignUp.message3)
-
+        cy.wait('@postUserErrorMessage')
     })
 
 
     it('Type firstname, lastname and email ', () => {
+        cy.intercept('POST', '/users')
+            .as('postUserErrorMessage')
         cy.get(signUpFormElements.firstName)
             .type(credentials.firstName)
         cy.get(signUpFormElements.lastName)
@@ -53,6 +58,7 @@ describe('Sign Up', () => {
         cy.get('#submit')
             .click()
         cy.ErrorMessages(errorMessagesSignUp.message4)
+        cy.wait('@postUserErrorMessage')
     })
 
 
@@ -72,7 +78,7 @@ describe('Sign Up', () => {
             .should('eq', 'https://thinking-tester-contact-list.herokuapp.com/contactList')
         cy.get('h1')
             .should('have.text', 'Contact List')
-        cy.get('[class="logout"]')
+        cy.get(signUpFormElements.logout)
             .click()
 
     })

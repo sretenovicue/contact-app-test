@@ -45,7 +45,10 @@ describe('Contact Form', () => {
         .find('tr')
         .children()
             .then(table => {
-                expect(table).to.have.length(7)
+                expect(table)
+                .to
+                .have
+                .length(7)
             })
 
 
